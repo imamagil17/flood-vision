@@ -20,9 +20,6 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * Handle an incoming authentication request.
-     */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
@@ -30,9 +27,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if ($request->user()->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            // Hapus memori intended lama agar tidak mengacaukan rute admin di kemudian hari
+            $request->session()->forget('url.intended'); 
+            
+            // Paksa (Direct Redirect) langsung ke rute admin dashboard menggunakan nama rutenya
+            return redirect()->route('admin.dashboard');
         }
 
+        // Untuk user/warga biasa, biarkan tetap menggunakan intended bawaan
         return redirect()->intended('/dashboard');
     }
 
