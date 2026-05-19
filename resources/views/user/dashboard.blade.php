@@ -1,55 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-800 leading-tight flex items-center gap-2">
-            <i data-lucide="map-pin" class="w-6 h-6 text-blue-600"></i>
-            {{ __('Flood-Vision — Sistem Mitigasi Banjir Cerdas') }}
-        </h2>
-    </x-slot>
-
     <div class="py-8 relative min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-20">
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
                 
                 <div class="xl:col-span-1 space-y-6 sticky top-6 self-start">
-
-                    <div class="bg-white/40 backdrop-blur-md rounded-3xl p-6 shadow-sm border border-white/40 flex flex-col relative overflow-hidden group transition-all duration-500" id="floodStatusCard">
-                        <div class="absolute top-0 right-0 w-40 h-40 bg-blue-50 rounded-full blur-3xl -z-10 group-hover:bg-blue-100 transition-colors"></div>
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="p-2 bg-blue-100 text-blue-600 rounded-xl">
-                                <i data-lucide="shield-alert" class="w-5 h-5"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-800 tracking-tight">Status Mitigasi Banjir Cerdas</h3>
-                            <span class="ml-auto flex h-2.5 w-2.5 relative">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
-                            </span>
-                        </div>
-
-                        <div class="flex flex-col items-center justify-center py-6 text-center" id="userStatusDisplay">
-                            <div class="w-24 h-24 rounded-full flex items-center justify-center mb-4 text-white text-4xl font-black shadow-lg transition-all duration-500" id="userStatusIcon" style="background:linear-gradient(135deg,#10b981,#059669)">
-                                <i data-lucide="check-circle" class="w-10 h-10"></i>
-                            </div>
-                            <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-1">Status Saat Ini</p>
-                            <p class="text-3xl font-black text-slate-800" id="userStatusLabel">AMAN</p>
-                            <p class="text-sm text-slate-500 mt-1 font-medium" id="userStatusDesc">Kondisi air normal. Tidak perlu khawatir.</p>
-                        </div>
-
-                        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 mt-2">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-semibold text-slate-600 flex items-center gap-1.5">
-                                    <i data-lucide="gauge" class="w-4 h-4 text-blue-500"></i> Level Air
-                                </span>
-                                <span class="text-lg font-black text-blue-600" id="userLevelValue">--<span class="text-sm font-semibold">%</span></span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                                <div class="h-3 rounded-full transition-all duration-700" id="userLevelBar" style="width:0%;background:linear-gradient(90deg,#10b981,#059669)"></div>
-                            </div>
-                        </div>
-
-                        <p class="text-center text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
-                            <i data-lucide="refresh-cw" class="w-3 h-3"></i> Diperbarui otomatis setiap 10 detik
-                        </p>
-                    </div>
 
                     <div class="bg-white/70 backdrop-blur-md rounded-3xl p-6 shadow-sm border border-slate-200/60 relative overflow-hidden">
                         <div class="flex items-center gap-3 mb-4">

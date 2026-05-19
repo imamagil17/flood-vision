@@ -1,11 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-extrabold text-2xl text-slate-800 leading-tight flex items-center gap-2">
-            <i data-lucide="newspaper" class="w-6 h-6 text-blue-600"></i>
-            {{ __('Kelola Berita Publik') }}
-        </h2>
-    </x-slot>
-
     <div class="py-8 relative min-h-screen">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
