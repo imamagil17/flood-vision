@@ -82,31 +82,6 @@ Ikuti langkah-langkah berikut untuk menjalankan Flood-Vision di mesin lokal Anda
    php artisan serve
    ```
    Aplikasi kini dapat diakses melalui `http://localhost:8000`.
-
----
-
-## ☁️ Panduan Workflow GitHub (Git Flow)
-
-Untuk menyimpan kodingan atau pembaruan fitur ke repositori Anda, gunakan siklus perintah berikut:
-
-1. **Cek status perubahan:**
-   ```bash
-   git status
-   ```
-2. **Tambahkan semua perubahan ke Staging:**
-   ```bash
-   git add .
-   ```
-3. **Simpan perubahan (Commit) dengan pesan yang jelas:**
-   ```bash
-   git commit -m "refactor: modularization html and clean code javascript"
-   ```
-4. **Unggah (Push) ke repositori GitHub:**
-   ```bash
-   git push origin main
-   ```
-   *(Ganti `main` dengan nama branch Anda jika menggunakan branch berbeda).*
-
 ---
 
 > **Developed by Imam Agil Aiman (F55123066) - Universitas Tadulako | Teknik Informatika**
