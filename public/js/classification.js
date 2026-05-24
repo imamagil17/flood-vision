@@ -68,6 +68,9 @@
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
             if (!token) return;
 
+            const riverSelect = document.getElementById('camera_river_select');
+            const sungai = riverSelect ? riverSelect.value : 'Sungai Gumbasa';
+
             const res = await fetch('/api/logs', {
                 method: 'POST',
                 headers: {
@@ -75,7 +78,11 @@
                     'Accept':       'application/json',
                     'X-CSRF-TOKEN': token,
                 },
-                body: JSON.stringify({ status, nilai_level: Math.round(level) }),
+                body: JSON.stringify({ 
+                    status, 
+                    nilai_level: Math.round(level),
+                    sungai: sungai 
+                }),
             });
 
             if (res.ok) {

@@ -23,15 +23,15 @@
             <div>
                 <p class="text-white/80 text-xs font-medium mb-1 uppercase tracking-wider">Level Air</p>
                 <div class="flex items-baseline gap-1">
-                    <span class="text-5xl font-black drop-shadow-sm" id="aiPredictedLevel">--</span>
+                    <span class="text-5xl font-black drop-shadow-sm" id="ai_level_air">--</span>
                     <span class="text-xl font-bold text-white/70">%</span>
                 </div>
-                <p class="text-sm font-bold mt-1 px-2 py-0.5 bg-white/20 rounded inline-block truncate max-w-full" id="aiPredictedStatus">Memuat...</p>
+                <p class="text-sm font-bold mt-1 px-2 py-0.5 bg-white/20 rounded inline-block truncate max-w-full" id="ai_status_keamanan">Memuat...</p>
             </div>
             <div class="text-left sm:text-right flex flex-col items-start sm:items-center">
                 <p class="text-white/80 text-xs font-medium mb-2 uppercase tracking-wider">Risk Score</p>
                 <div class="w-16 h-16 rounded-full border-4 border-white/30 flex items-center justify-center relative bg-white/10 backdrop-blur-md shadow-inner">
-                    <span class="text-xl font-black drop-shadow-sm" id="aiRiskScore">--</span>
+                    <span class="text-xl font-black drop-shadow-sm" id="ai_risk_score">--</span>
                 </div>
             </div>
         </div>

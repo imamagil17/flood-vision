@@ -70,11 +70,11 @@ async function fetchDashboardData() {
         const aiJson = await aiRes.json();
         if(aiJson.success) {
             const d = aiJson.data;
-            const aiLev = document.getElementById('aiPredictedLevel');
+            const aiLev = document.getElementById('aiPredictedLevel') || document.getElementById('ai_level_air');
             if(aiLev) aiLev.innerText = d.predicted_level;
-            const aiStat = document.getElementById('aiPredictedStatus');
+            const aiStat = document.getElementById('aiPredictedStatus') || document.getElementById('ai_status_keamanan');
             if(aiStat) aiStat.innerText = d.prediction_status;
-            const aiRisk = document.getElementById('aiRiskScore');
+            const aiRisk = document.getElementById('aiRiskScore') || document.getElementById('ai_risk_score');
             if(aiRisk) aiRisk.innerText = d.risk_score;
             
             const card = document.getElementById('aiInsightsCard');

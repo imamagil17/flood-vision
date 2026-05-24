@@ -30,35 +30,111 @@
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-slate-50 border-b border-slate-200">
                             <tr class="text-slate-600 text-sm">
-                                <th class="py-4 px-6 font-bold">Waktu Perekaman</th>
-                                <th class="py-4 px-6 font-bold">Ketinggian Air (%)</th>
-                                <th class="py-4 px-6 font-bold">Bukti Visual (OpenCV)</th>
+                                <th class="py-4 px-6 font-bold">Nama Sungai</th>
+                                <th class="py-4 px-6 font-bold">Tanggal</th>
+                                <th class="py-4 px-6 font-bold">Waktu</th>
+                                <th class="py-4 px-6 font-bold">Cuaca</th>
+                                <th class="py-4 px-6 font-bold">Tinggi Air</th>
+                                <th class="py-4 px-6 font-bold">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-sm">
                             @forelse ($logs as $log)
+                                @php
+                                    // Ambil data dengan fallback agar aman jika properti DB berbeda
+                                    $sungai = $log->nama_sungai ?? 'Sungai Palu';
+                                    
+                                    $timeObj = null;
+                                    if (isset($log->recorded_at)) {
+                                        $timeObj = \Carbon\Carbon::parse($log->recorded_at);
+                                    } elseif (isset($log->waktu_rekaman)) {
+                                        $timeObj = \Carbon\Carbon::parse($log->waktu_rekaman);
+                                    } else {
+                                        $timeObj = $log->created_at;
+                                    }
+                                    
+                                    $tanggal = $timeObj->format('d M Y');
+                                    $waktu = $timeObj->format('H:i') . ' WITA';
+                                    
+                                    $level = $log->water_level ?? $log->nilai_level ?? 0;
+                                    
+                                    // Hitung status secara dinamis jika status_kondisi tidak didefinisikan
+                                    $status = 'Normal';
+                                    $colorClass = 'text-emerald-600';
+                                    
+                                    if (isset($log->status_kondisi)) {
+                                        $status = $log->status_kondisi;
+                                    } else {
+                                        if ($level >= 80) {
+                                            $status = 'Bahaya';
+                                        } elseif ($level >= 50) {
+                                            $status = 'Siaga';
+                                        } elseif ($level >= 35) {
+                                            $status = 'Waspada';
+                                        }
+                                    }
+                                    
+                                    if ($status === 'Bahaya') {
+                                        $colorClass = 'text-red-600';
+                                    } elseif ($status === 'Siaga') {
+                                        $colorClass = 'text-orange-500';
+                                    } elseif ($status === 'Waspada') {
+                                        $colorClass = 'text-amber-500';
+                                    } else {
+                                        $colorClass = 'text-emerald-600';
+                                    }
+                                    
+                                    // Simulasi Cuaca dinamis berdasarkan level air
+                                    $cuaca = 'Cerah';
+                                    $icon = 'sun';
+                                    $iconColor = 'text-amber-500';
+                                    
+                                    if ($status === 'Bahaya' || $status === 'Siaga') {
+                                        $cuaca = 'Hujan Deras';
+                                        $icon = 'cloud-lightning';
+                                        $iconColor = 'text-indigo-500';
+                                    } elseif ($status === 'Waspada') {
+                                        $cuaca = 'Gerimis';
+                                        $icon = 'cloud-rain';
+                                        $iconColor = 'text-blue-500';
+                                    } else {
+                                        $cuaca = 'Berawan';
+                                        $icon = 'cloud-sun';
+                                        $iconColor = 'text-slate-400';
+                                    }
+                                @endphp
                                 <tr class="hover:bg-slate-50/50 transition-colors">
-                                    <td class="py-4 px-6 text-slate-600 font-medium">
-                                        {{ \Carbon\Carbon::parse($log->recorded_at)->format('d M 2026, H:i') }} WITA
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <span class="inline-flex items-center font-extrabold text-slate-800 text-base">
-                                            {{ $log->water_level }} %
-                                        </span>
-                                    </td>
-                                    <td class="py-4 px-6">
+                                    <td class="py-4 px-6 text-blue-600 font-bold hover:underline cursor-pointer">
                                         @if($log->image_path)
-                                            <a href="{{ asset('storage/' . $log->image_path) }}" target="_blank" class="text-blue-600 hover:text-blue-700 font-bold inline-flex items-center gap-1">
-                                                Lihat Foto Snapshot 📸
+                                            <a href="{{ asset('storage/' . $log->image_path) }}" target="_blank">
+                                                {{ $sungai }} 📸
                                             </a>
                                         @else
-                                            <span class="text-slate-400 italic text-xs">Tidak ada gambar</span>
+                                            {{ $sungai }}
                                         @endif
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-500 font-medium">
+                                        {{ $tanggal }}
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-500 font-medium">
+                                        {{ $waktu }}
+                                    </td>
+                                    <td class="py-4 px-6 text-slate-600 font-medium">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="{{ $icon }}" class="w-4 h-4 {{ $iconColor }}"></i>
+                                            <span>{{ $cuaca }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 font-bold text-slate-700">
+                                        {{ $level }}{{ isset($log->water_level) ? ' %' : ' cm' }}
+                                    </td>
+                                    <td class="py-4 px-6 font-extrabold uppercase tracking-wide {{ $colorClass }}">
+                                        {{ $status }}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="py-16 text-center">
+                                    <td colspan="6" class="py-16 text-center">
                                         <div class="flex flex-col items-center justify-center text-slate-400">
                                             <svg class="w-14 h-14 mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>

@@ -32,6 +32,10 @@
                         <x-nav-link :href="route('admin.citizen_reports.index')" :active="request()->routeIs('admin.citizen_reports.*')" class="text-slate-600 font-semibold hover:text-blue-600 transition-colors">
                             {{ __('Laporan Warga') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('admin.kelola_video.index')" :active="request()->routeIs('admin.kelola_video.*')" class="text-slate-600 font-semibold hover:text-blue-600 transition-colors">
+                            {{ __('Kelola Video') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -103,6 +107,10 @@
 
                 <x-responsive-nav-link :href="route('admin.citizen_reports.index')" :active="request()->routeIs('admin.citizen_reports.*')">
                     {{ __('Laporan Warga') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.kelola_video.index')" :active="request()->routeIs('admin.kelola_video.*')">
+                    {{ __('Kelola Video') }}
                 </x-responsive-nav-link>
             @endif
         </div>

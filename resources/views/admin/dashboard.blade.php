@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="py-8 relative min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-20">
+  
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
                 
                 <!-- KOLOM KIRI (1 Bagian) -->
@@ -38,6 +39,7 @@
     </style>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     
     <script>
         window.onOpenCvReady = function() {

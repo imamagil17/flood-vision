@@ -8,10 +8,49 @@
                     <p class="text-slate-500 mt-2">Pantau riwayat pesan peringatan dini yang dikirim otomatis oleh sistem ke grup Telegram warga.</p>
                 </div>
                 
-                <form action="{{ route('admin.notifications.test') }}" method="POST">
+                <form action="{{ route('admin.notifications.test') }}" method="POST" class="w-full lg:w-auto bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row items-end gap-3.5 shadow-sm shrink-0">
                     @csrf
-                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-0.5">
-                        <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    <div class="w-full sm:w-44">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Pilih Sungai</label>
+                        <div class="relative">
+                            <select name="sungai" id="river_select" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all" required>
+                                <option value="" disabled selected>Pilih Sungai</option>
+                                <option value="Sungai Gumbasa">Sungai Gumbasa</option>
+                                <option value="Sungai Palu">Sungai Palu</option>
+                                <option value="Sungai Lariang">Sungai Lariang</option>
+                                <option value="Sungai Lindu">Sungai Lindu</option>
+                                <option value="Sungai Samba">Sungai Samba</option>
+                                <option value="Sungai Pakuli">Sungai Pakuli</option>
+                                <option value="Sungai Marawola">Sungai Marawola</option>
+                                <option value="Sungai Palolo">Sungai Palolo</option>
+                                <option value="Sungai Kulawi">Sungai Kulawi</option>
+                                <option value="Sungai Ngatabaru">Sungai Ngatabaru</option>
+                                <option value="Sungai Wuno">Sungai Wuno</option>
+                                <option value="Sungai Bangga">Sungai Bangga</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full sm:w-36">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Tingkat Status</label>
+                        <div class="relative">
+                            <select name="status" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all" required>
+                                <option value="Waspada">Waspada</option>
+                                <option value="Siaga">Siaga</option>
+                                <option value="Bahaya" selected>Bahaya</option>
+                                <option value="Normal">Normal</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl shadow-md shadow-blue-500/10 hover:shadow-lg transition-all transform hover:-translate-y-0.5 shrink-0 h-[36px]">
+                        <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                         Uji Tembak Telegram
                     </button>
                 </form>
@@ -32,7 +71,30 @@
             @endif
 
             <div class="bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl shadow-slate-200/50 rounded-3xl p-6 overflow-hidden">
-                <h3 class="text-xl font-bold text-slate-800 mb-6">Riwayat Broadcast Sistem</h3>
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+                    <h3 class="text-xl font-bold text-slate-800">Riwayat Broadcast Sistem</h3>
+                    
+                    <div class="relative w-full sm:w-60">
+                        <select onchange="window.location.href = this.value ? '?sungai=' + encodeURIComponent(this.value) : '?'" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all">
+                            <option value="">Semua Sungai</option>
+                            <option value="Sungai Gumbasa" {{ request('sungai') == 'Sungai Gumbasa' ? 'selected' : '' }}>Sungai Gumbasa</option>
+                            <option value="Sungai Palu" {{ request('sungai') == 'Sungai Palu' ? 'selected' : '' }}>Sungai Palu</option>
+                            <option value="Sungai Lariang" {{ request('sungai') == 'Sungai Lariang' ? 'selected' : '' }}>Sungai Lariang</option>
+                            <option value="Sungai Lindu" {{ request('sungai') == 'Sungai Lindu' ? 'selected' : '' }}>Sungai Lindu</option>
+                            <option value="Sungai Samba" {{ request('sungai') == 'Sungai Samba' ? 'selected' : '' }}>Sungai Samba</option>
+                            <option value="Sungai Pakuli" {{ request('sungai') == 'Sungai Pakuli' ? 'selected' : '' }}>Sungai Pakuli</option>
+                            <option value="Sungai Marawola" {{ request('sungai') == 'Sungai Marawola' ? 'selected' : '' }}>Sungai Marawola</option>
+                            <option value="Sungai Palolo" {{ request('sungai') == 'Sungai Palolo' ? 'selected' : '' }}>Sungai Palolo</option>
+                            <option value="Sungai Kulawi" {{ request('sungai') == 'Sungai Kulawi' ? 'selected' : '' }}>Sungai Kulawi</option>
+                            <option value="Sungai Ngatabaru" {{ request('sungai') == 'Sungai Ngatabaru' ? 'selected' : '' }}>Sungai Ngatabaru</option>
+                            <option value="Sungai Wuno" {{ request('sungai') == 'Sungai Wuno' ? 'selected' : '' }}>Sungai Wuno</option>
+                            <option value="Sungai Bangga" {{ request('sungai') == 'Sungai Bangga' ? 'selected' : '' }}>Sungai Bangga</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="overflow-x-auto rounded-xl border border-slate-200">
                     <table class="w-full text-left border-collapse">
@@ -45,16 +107,33 @@
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-sm">
                             @forelse ($logs as $log)
+                                @php
+                                    $currentStatus = strtoupper($log->status_kondisi);
+                                @endphp
                                 <tr class="hover:bg-slate-50/50 transition-colors">
                                     <td class="py-4 px-6 text-slate-500 font-medium">
-                                        {{ $log->created_at->format('d M 2026, H:i') }} WITA
+                                        {{ $log->created_at->format('d M Y, H:i') }} WITA
                                     </td>
                                     <td class="py-4 px-6 text-slate-700 font-medium whitespace-pre-line leading-relaxed">
-                                        {{ $log->message }}
+                                        @if($currentStatus === 'NORMAL' || $currentStatus === 'AMAN')
+                                            🤖 <span class="font-extrabold text-emerald-600">[SISTEM MONITORING - {{ $log->nama_sungai }}]</span>
+                                            Pemantauan otomatis model YOLO & OpenCV berjalan dengan normal. Kondisi aliran sungai saat ini terpantau aman di bawah ambang batas.
+                                        @else
+                                            🚨 <span class="font-extrabold text-rose-600">[DARURAT STATUS {{ $currentStatus }} - WARNING BANJIR]</span>
+                                            Sistem Flood Vision mendeteksi kondisi darurat pada lokasi pemantauan aktif.
+                                        @endif
+                                        • Nama Sungai: {{ $log->nama_sungai }}
+                                        • Waktu Deteksi: {{ \Carbon\Carbon::parse($log->waktu_rekaman)->format('H:i') }} WITA
+                                        • Ketinggian Air: {{ $log->nilai_level }} cm
+                                        • Status Keamanan: {{ $currentStatus }}
+                                        @if($currentStatus !== 'NORMAL' && $currentStatus !== 'AMAN')
+                                            
+                                        *PERINTAH EVAKUASI:* Warga di sekitar aliran {{ $log->nama_sungai }} diharap tetap siaga dan bersiap melakukan evakuasi mandiri jika kondisi terus meningkat.
+                                        @endif
                                     </td>
                                     <td class="py-4 px-6 text-center">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold {{ $log->status == 'Terkirim ✅' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
-                                            {{ $log->status }}
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                            Terkirim ✅
                                         </span>
                                     </td>
                                 </tr>
@@ -63,8 +142,8 @@
                                     <td colspan="3" class="py-16 text-center">
                                         <div class="flex flex-col items-center justify-center text-slate-400">
                                             <svg class="w-14 h-14 mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                                            <span class="font-bold text-base text-slate-700">Belum Ada Log Penyiaran</span>
-                                            <span class="text-sm text-slate-400 mt-1">Sistem belum pernah mengirimkan pesan darurat otomatis.</span>
+                                            <span class="font-bold text-base text-slate-700">Belum Ada Log Broadcast</span>
+                                            <span class="text-sm text-slate-400 mt-1">Belum ada riwayat aktivitas pengiriman pesan sistem yang tercatat.</span>
                                         </div>
                                     </td>
                                 </tr>

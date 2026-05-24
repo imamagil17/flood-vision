@@ -19,9 +19,6 @@
                         @include('user.partials.ai-prediction-card')
                     </div>
 
-                    <!-- Statistik Harian -->
-                    @include('user.partials.today-stats')
-
                     <!-- Grafik Tren Ketinggian Air -->
                     @include('user.partials.water-chart')
 
@@ -54,6 +51,7 @@
     <!-- EXTERNAL DEPENDENCIES -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     
     <script>
         window.onOpenCvReady = function() { console.log('OpenCV.js is ready.'); };

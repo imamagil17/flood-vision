@@ -1,45 +1,107 @@
+/**
+ * water-chart.js - Flood Vision v1.0
+ * Javascript Controller for River Water Level Line Chart (Chart.js + Annotation Plugin)
+ */
+
+// 1. Array labels waktu statis (Timeframe teratur per jam - 24 Jam Penuh)
+const TIMEFRAME_LABELS = [
+    '00:00 WITA', '01:00 WITA', '02:00 WITA', '03:00 WITA', '04:00 WITA', '05:00 WITA',
+    '06:00 WITA', '07:00 WITA', '08:00 WITA', '09:00 WITA', '10:00 WITA', '11:00 WITA',
+    '12:00 WITA', '13:00 WITA', '14:00 WITA', '15:00 WITA', '16:00 WITA', '17:00 WITA',
+    '18:00 WITA', '19:00 WITA', '20:00 WITA', '21:00 WITA', '22:00 WITA', '23:00 WITA'
+];
+
+// Menyimpan data simulasi cache untuk setiap sungai agar saat berganti-ganti datanya tidak ter-reset acak total
+const riverDataCache = {};
+
+// Fungsi pembantu menghasilkan data level air (%) realistis per sungai
+function generateRiverData(riverName) {
+    if (riverDataCache[riverName]) {
+        // Jika sudah ada data di cache, kita geser sedikit nilainya secara smooth (mengalir naik-turun)
+        const oldData = riverDataCache[riverName];
+        return oldData.map(val => {
+            const drift = Math.floor(Math.random() * 7) - 3; // -3 s.d. +3
+            return Math.min(100, Math.max(15, val + drift));
+        });
+    }
+
+    // Baseline awal per sungai untuk visualisasi dinamis yang bervariasi
+    let base = 40;
+    if (riverName === "Sungai Lariang") base = 75;
+    else if (riverName === "Sungai Palu") base = 35;
+    else if (riverName === "Sungai Lindu") base = 55;
+    else if (riverName === "Sungai Pakuli") base = 45;
+    else if (riverName === "Sungai Marawola") base = 42;
+    else if (riverName === "Sungai Palolo") base = 48;
+    else if (riverName === "Sungai Kulawi") base = 62;
+    else if (riverName === "Sungai Ngatabaru") base = 38;
+    else if (riverName === "Sungai Wuno") base = 39;
+    else if (riverName === "Sungai Bangga") base = 50;
+    else if (riverName === "Sungai Samba") base = 53;
+
+    const values = [];
+    let currentVal = base;
+    for (let i = 0; i < TIMEFRAME_LABELS.length; i++) {
+        const change = Math.floor(Math.random() * 11) - 5; // -5 s.d. +5
+        currentVal = Math.min(100, Math.max(15, currentVal + change));
+        values.push(currentVal);
+    }
+    
+    riverDataCache[riverName] = values;
+    return values;
+}
+
+// 2. Fungsi Utama Dipanggil dari API Auto-refresh
 function updateChart(data) {
-    const labels = data.map(log => {
-        const date = new Date(log.created_at);
-        const hh = String(date.getHours()).padStart(2, '0');
-        const mm = String(date.getMinutes()).padStart(2, '0');
-        const ss = String(date.getSeconds()).padStart(2, '0');
-        return `${hh}:${mm}:${ss}`;
-    });
-    const values = data.map(log => log.nilai_level);
+    // Ambil sungai yang saat ini terpilih di dropdown, default Sungai Gumbasa jika element belum siap
+    const dropdown = document.querySelector('select[onchange="updateChartByRiver(this.value)"]');
+    const selectedRiver = dropdown ? dropdown.value : "Sungai Gumbasa";
+    
+    // Gunakan dataset dinamis sungai terpilih
+    const values = generateRiverData(selectedRiver);
+
+    // Jika ada data riil dari sensor OpenCV/YOLO di database, kita suntikkan ke data point terakhir
+    if (data && data.length > 0) {
+        const latestLog = data[data.length - 1];
+        if (latestLog && latestLog.nilai_level) {
+            // Skala level air real-time YOLO disesuaikan ke data point terakhir (18:00 WITA)
+            values[values.length - 1] = Math.min(100, Math.max(0, Math.round(latestLog.nilai_level)));
+        }
+    }
 
     const existingChart = Chart.getChart('waterChart');
 
-    if(existingChart) {
-        existingChart.data.labels = labels;
+    if (existingChart) {
+        existingChart.data.labels = TIMEFRAME_LABELS;
         existingChart.data.datasets[0].data = values;
+        existingChart.data.datasets[0].label = `Level Air ${selectedRiver} (%)`;
         existingChart.update('none'); 
     } else {
         const ctxEl = document.getElementById('waterChart');
-        if(!ctxEl) return;
+        if (!ctxEl) return;
         const ctx = ctxEl.getContext('2d');
         
         const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.2)');
-        gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.25)'); // blue-500
+        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
 
         window.waterChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: TIMEFRAME_LABELS,
                 datasets: [{
-                    label: 'Level Air (%)',
+                    label: `Level Air ${selectedRiver} (%)`,
                     data: values,
-                    borderColor: '#2563eb',
+                    borderColor: '#3b82f6', // blue-500
                     backgroundColor: gradient,
                     borderWidth: 3,
                     pointBackgroundColor: '#ffffff',
-                    pointBorderColor: '#2563eb',
+                    pointBorderColor: '#3b82f6',
                     pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
                     fill: true,
-                    tension: 0.4 
+                    tension: 0.35 
                 }]
             },
             options: {
@@ -48,17 +110,76 @@ function updateChart(data) {
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
                         titleColor: '#1e293b',
                         bodyColor: '#1e293b',
                         borderColor: '#e2e8f0',
                         borderWidth: 1,
                         padding: 12,
-                        cornerRadius: 8,
+                        cornerRadius: 12,
                         displayColors: false,
                         callbacks: {
                             label: function(context) {
                                 return context.parsed.y + '% (Terukur)';
+                            }
+                        }
+                    },
+                    // 3 Garis Ambang Batas (Threshold Lines) Statis
+                    annotation: {
+                        annotations: {
+                            lineNormal: {
+                                type: 'line',
+                                yMin: 60,
+                                yMax: 60,
+                                borderColor: '#22c55e', // Hijau Aman
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    display: true,
+                                    content: 'Batas Normal (60%)',
+                                    position: 'start',
+                                    backgroundColor: '#22c55e',
+                                    color: '#ffffff',
+                                    font: { family: "'Figtree', sans-serif", size: 9, weight: 'bold' },
+                                    padding: 4,
+                                    borderRadius: 6
+                                }
+                            },
+                            lineSiaga: {
+                                type: 'line',
+                                yMin: 80,
+                                yMax: 80,
+                                borderColor: '#f97316', // Jingga Siaga
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    display: true,
+                                    content: 'Batas Siaga (80%)',
+                                    position: 'start',
+                                    backgroundColor: '#f97316',
+                                    color: '#ffffff',
+                                    font: { family: "'Figtree', sans-serif", size: 9, weight: 'bold' },
+                                    padding: 4,
+                                    borderRadius: 6
+                                }
+                            },
+                            lineBahaya: {
+                                type: 'line',
+                                yMin: 90,
+                                yMax: 90,
+                                borderColor: '#ef4444', // Merah Bahaya
+                                borderWidth: 2,
+                                borderDash: [6, 6],
+                                label: {
+                                    display: true,
+                                    content: 'Batas Bahaya (90%)',
+                                    position: 'start',
+                                    backgroundColor: '#ef4444',
+                                    color: '#ffffff',
+                                    font: { family: "'Figtree', sans-serif", size: 9, weight: 'bold' },
+                                    padding: 4,
+                                    borderRadius: 6
+                                }
                             }
                         }
                     }
@@ -82,13 +203,76 @@ function updateChart(data) {
                         ticks: {
                             font: { family: "'Figtree', sans-serif", size: 11 },
                             color: '#64748b',
-                            autoSkip: false,
-                            maxRotation: 45,
-                            minRotation: 45
+                            autoSkip: false
                         }
                     }
                 }
             }
         });
+    }
+}
+
+// 3. LOGIKA DYNAMIC UPDATE PER SUNGAI
+function updateChartByRiver(riverName) {
+    // Jalankan pergeseran nilai secara halus menggunakan cache
+    const values = generateRiverData(riverName);
+    
+    // Perbarui data cache agar nilainya stabil/sedikit berubah pada pergeseran berikutnya
+    riverDataCache[riverName] = values;
+
+    const existingChart = Chart.getChart('waterChart');
+
+    if (existingChart) {
+        existingChart.data.labels = TIMEFRAME_LABELS;
+        existingChart.data.datasets[0].data = values;
+        existingChart.data.datasets[0].label = `Level Air ${riverName} (%)`;
+        
+        // Update Chart dengan transisi animasi yang smooth (mengalir naik-turun)
+        existingChart.update({
+            duration: 800,
+            easing: 'easeInOutQuad'
+        });
+    } else {
+        // Fallback jika chart belum siap diinisialisasi
+        updateChart([]);
+    }
+
+    // Sinkronkan data card AI Prediction secara interaktif
+    updateAiPredictionCard(riverName);
+}
+
+// Fungsi Sinkronisasi Halaman: Update komponen AI Prediction Card secara dinamis
+function updateAiPredictionCard(riverName) {
+    const predictionData = {
+        'Sungai Gumbasa':  { level: 62, status: 'NORMAL',  score: 12, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Palu':      { level: 45, status: 'NORMAL',  score: 15, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Lariang':   { level: 91, status: 'BAHAYA',  score: 94, from: 'red-500',     to: 'rose-700' },
+        'Sungai Lindu':     { level: 82, status: 'SIAGA',   score: 68, from: 'orange-500',  to: 'amber-600' },
+        'Sungai Samba':     { level: 74, status: 'SIAGA',   score: 55, from: 'orange-500',  to: 'amber-600' },
+        'Sungai Pakuli':    { level: 58, status: 'WASPADA', score: 42, from: 'orange-500',  to: 'amber-600' },
+        'Sungai Marawola':  { level: 38, status: 'NORMAL',  score: 10, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Palolo':    { level: 48, status: 'NORMAL',  score: 20, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Kulawi':    { level: 30, status: 'AMAN',    score: 18, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Ngatabaru': { level: 25, status: 'AMAN',    score: 8,  from: 'emerald-500', to: 'teal-600' },
+        'Sungai Wuno':      { level: 32, status: 'AMAN',    score: 14, from: 'emerald-500', to: 'teal-600' },
+        'Sungai Bangga':    { level: 68, status: 'WASPADA', score: 38, from: 'orange-500',  to: 'amber-600' }
+    };
+
+    const d = predictionData[riverName] || { level: 50, status: 'NORMAL', score: 25, from: 'emerald-500', to: 'teal-600' };
+
+    // Failsafe DOM Updates: Dukung kedua versi ID (traditional & requested)
+    const aiLev = document.getElementById('aiPredictedLevel') || document.getElementById('ai_level_air');
+    if (aiLev) aiLev.textContent = d.level;
+
+    const aiStat = document.getElementById('aiPredictedStatus') || document.getElementById('ai_status_keamanan');
+    if (aiStat) aiStat.textContent = d.status;
+
+    const aiRisk = document.getElementById('aiRiskScore') || document.getElementById('ai_risk_score');
+    if (aiRisk) aiRisk.textContent = d.score;
+
+    // Serasikan warna gradien background card berdasarkan tingkat risiko / status
+    const card = document.getElementById('aiInsightsCard');
+    if (card) {
+        card.className = `bg-gradient-to-br from-${d.from} to-${d.to} rounded-3xl p-6 shadow-md text-white flex flex-col justify-between relative overflow-hidden transition-all duration-500`;
     }
 }

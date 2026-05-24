@@ -25,48 +25,88 @@ class LogController extends Controller
         $validated = $request->validate([
             'status' => 'required|string',
             'nilai_level' => 'required|numeric',
+            'sungai' => 'nullable|string',
         ]);
 
-        $log = LogDeteksi::create($validated);
+        // Simpan data log deteksi ke database
+        $log = LogDeteksi::create([
+            'status' => $request->status,
+            'nilai_level' => $request->nilai_level,
+        ]);
+
+        // ── DATABASE ATURAN AMBANG BATAS DINAMIS PER SUNGAI ──
+        $thresholds = [
+            "Sungai Gumbasa" => [ 'waspada' => 250, 'siaga' => 350, 'bahaya' => 450, 'max' => 500 ],
+            "Sungai Palu"     => [ 'waspada' => 150, 'siaga' => 200, 'bahaya' => 280, 'max' => 320 ],
+            "Sungai Lindu"    => [ 'waspada' => 300, 'siaga' => 390, 'bahaya' => 500, 'max' => 550 ],
+            "Sungai Lariang"  => [ 'waspada' => 400, 'siaga' => 550, 'bahaya' => 700, 'max' => 800 ],
+            "Sungai Pakuli"   => [ 'waspada' => 200, 'siaga' => 300, 'bahaya' => 400, 'max' => 450 ],
+            "Sungai Marawola" => [ 'waspada' => 180, 'siaga' => 270, 'bahaya' => 360, 'max' => 400 ],
+            "Sungai Palolo"   => [ 'waspada' => 220, 'siaga' => 320, 'bahaya' => 420, 'max' => 460 ],
+            "Sungai Kulawi"   => [ 'waspada' => 280, 'siaga' => 370, 'bahaya' => 470, 'max' => 520 ],
+            "Sungai Ngatabaru"=> [ 'waspada' => 160, 'siaga' => 230, 'bahaya' => 300, 'max' => 340 ],
+            "Sungai Wuno"     => [ 'waspada' => 170, 'siaga' => 250, 'bahaya' => 330, 'max' => 370 ],
+            "Sungai Bangga"   => [ 'waspada' => 240, 'siaga' => 340, 'bahaya' => 440, 'max' => 480 ],
+            "Sungai Samba"    => [ 'waspada' => 260, 'siaga' => 360, 'bahaya' => 460, 'max' => 500 ]
+        ];
+
+        $namaSungai = $request->input('sungai', 'Sungai Gumbasa');
+        $levelPercentage = $request->nilai_level;
+        $rules = $thresholds[$namaSungai] ?? [ 'waspada' => 200, 'siaga' => 300, 'bahaya' => 400, 'max' => 450 ];
+
+        // Konversi persentase (%) level air Canny Edge menjadi satuan centimeter (cm) berdasarkan max scale
+        $nilaiCm = round(($levelPercentage / 100) * $rules['max']);
+
+        // Klasifikasikan status keamanan centimeter dinamis
+        if ($nilaiCm >= $rules['bahaya']) {
+            $status = 'BAHAYA';
+        } elseif ($nilaiCm >= $rules['siaga']) {
+            $status = 'SIAGA';
+        } elseif ($nilaiCm >= $rules['waspada']) {
+            $status = 'WASPADA';
+        } else {
+            $status = 'NORMAL';
+        }
 
         // ====================================================
         // --- MULAI KODE OTOMATISASI TELEGRAM ---
         // ====================================================
-        $token = env('TELEGRAM_BOT_TOKEN');
-        $chatId = env('TELEGRAM_CHAT_ID');
-        $message = "";
-        $shouldSend = false;
+        $shouldSend = in_array($status, ['WASPADA', 'SIAGA', 'BAHAYA']);
 
-        $status_kamera = strtoupper($request->status);
-        $level = $request->nilai_level;
-
-        // KONDISI 1: SIAGA (Kuning)
-        if ($status_kamera === 'SIAGA') {
-            $message = "⚠️ [PERINGATAN STATUS KUNING - SIAGA]\n";
-            $message .= "Sistem Flood-Vision mendeteksi kenaikan air sungai.\n\n";
-            $message .= "• Ketinggian Air: " . $level . "%\n";
-            $message .= "• Status Keamanan: SIAGA\n";
-            $message .= "• Waktu Kejadian: " . now()->format('d M Y, H:i') . " WITA\n\n";
-            $message .= "📢 PEMBERITAHUAN: Terdapat POTENSI BANJIR di sekitar bantaran sungai. Dihimbau kepada seluruh warga untuk tetap waspada.";
-            $shouldSend = true;
-        } 
-        // KONDISI 2: AWAS (Merah)
-        elseif ($status_kamera === 'AWAS') {
-            $message = "🚨 [DARURAT STATUS MERAH - AWAS BANJIR]\n";
-            $message .= "PERINGATAN KRITIS! Air sungai telah melewati batas aman.\n\n";
-            $message .= "• Ketinggian Air: " . $level . "%\n";
-            $message .= "• Status Keamanan: AWAS\n";
-            $message .= "• Waktu Kejadian: " . now()->format('d M Y, H:i') . " WITA\n\n";
-            $message .= "❗ PERINTAH EVAKUASI: Banjir luapan besar berpotensi terjadi saat ini juga. Dimohon kepada seluruh warga terdampak untuk SEGERA MENGUNGSI ke titik aman!";
-            $shouldSend = true;
-        }
-
-        // Eksekusi Kirim jika kondisi Siaga/Awas
         if ($shouldSend) {
+            $token = env('TELEGRAM_BOT_TOKEN');
+            $chatId = env('TELEGRAM_CHAT_ID');
+            $waktu = now()->format('d M Y, H:i') . ' WITA';
+
+            // Format isi pesan baru wajib seperti spesifikasi user
+            $message = "🚨 *[DARURAT STATUS " . $status . " - WARNING BANJIR]*\n";
+            $message .= "PERINGATAN KRITIS! Sistem Flood Vision mendeteksi luapan air pada lokasi pemantauan aktif.\n";
+            $message .= "• Nama Sungai: " . $namaSungai . "\n";
+            $message .= "• Ketinggian Air: " . $nilaiCm . " cm\n";
+            $message .= "• Status Keamanan: " . $status . "\n";
+            $message .= "• Waktu Kejadian: " . $waktu . "\n\n";
+            $message .= "PERINTAH EVAKUASI: Dimohon kepada seluruh warga di sekitar aliran " . $namaSungai . " untuk tetap siaga dan bersiap evakuasi mandiri jika kondisi terus meningkat!";
+
+            // Simulasikan juga log upload video agar datanya terikat di table riwayat visual admin
+            try {
+                \App\Models\VideoUploadLog::create([
+                    'nama_sungai' => $namaSungai,
+                    'file_video' => 'camera_feed_simulation.mp4',
+                    'ukuran_file' => '0 MB',
+                    'waktu_rekaman' => now(),
+                    'nilai_level' => $nilaiCm,
+                    'status_kondisi' => $status,
+                    'keterangan' => 'Deteksi otomatis Canny Edge Camera aktif.'
+                ]);
+            } catch (\Exception $e) {
+                // Ignore
+            }
+
             try {
                 $response = Http::withoutVerifying()->post("https://api.telegram.org/bot{$token}/sendMessage", [
                     'chat_id' => $chatId,
                     'text' => $message,
+                    'parse_mode' => 'Markdown',
                 ]);
 
                 NotificationLog::create([
@@ -86,7 +126,9 @@ class LogController extends Controller
 
         return response()->json([
             'message' => 'Log saved successfully',
-            'data' => $log
+            'data' => $log,
+            'simulated_cm' => $nilaiCm,
+            'classified_status' => $status
         ], 201);
     }
 

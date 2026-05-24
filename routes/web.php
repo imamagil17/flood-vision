@@ -7,10 +7,11 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\AiAnalyticsController;
 use App\Http\Controllers\ChatbotController;
-use App\Http\Controllers\Admin\NotificationLogController;
-use App\Http\Controllers\Admin\WaterLevelLogController;
+use App\Http\Controllers\NotificationLogController;
+use App\Http\Controllers\WaterLevelLogController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\CitizenReportController;
+use App\Http\Controllers\VideoUploadController;
 
 // 1. Halaman Beranda / Welcome Publik
 Route::get('/', function () {
@@ -25,7 +26,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         // Tarik data berita untuk preview di admin
         $beritas = \App\Models\Berita::latest()->get(); 
         $reports = \App\Models\CitizenReport::with('user')->latest()->take(3)->get();
-        return view('admin.dashboard', compact('beritas', 'reports'));
+        
+        // Ringkasan data untuk card atas (Audit Controller backend check)
+        $totalReports = \App\Models\CitizenReport::count();
+        $totalBerita = \App\Models\Berita::count();
+        $totalVideos = \App\Models\VideoUploadLog::count();
+        $totalAlerts = \App\Models\VideoUploadLog::whereIn('status_kondisi', ['Waspada', 'Siaga', 'Bahaya', 'WASPADA', 'SIAGA', 'BAHAYA'])->count();
+
+        return view('admin.dashboard', compact('beritas', 'reports', 'totalReports', 'totalBerita', 'totalVideos', 'totalAlerts'));
     })->name('admin.dashboard');
 
     Route::get('/admin/notifications', [NotificationLogController::class, 'index'])->name('admin.notifications.index');
@@ -45,6 +53,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // CRUD Laporan Warga di Sisi Admin
     Route::post('/admin/reports/{id}/verify', [CitizenReportController::class, 'verify'])->name('admin.reports.verify');
     Route::get('/admin/citizen-reports', [CitizenReportController::class, 'index'])->name('admin.citizen_reports.index');
+
+    Route::get('/admin/videos/kelola-video', [VideoUploadController::class, 'index'])->name('admin.kelola_video.index');
+    Route::post('/admin/videos/kelola-video', [VideoUploadController::class, 'store'])->name('admin.kelola_video.store');
 });
 
 // 3. Smart Route Pembagi Dashboard Utama Berdasarkan Role
