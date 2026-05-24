@@ -48,8 +48,8 @@ Ikuti langkah-langkah berikut untuk menjalankan Flood-Vision di mesin lokal Anda
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/flood-vision.git
-   cd flood-vision
+   git clone https://github.com/imamagil17/capstone-12
+   cd capstone-12
    ```
 
 2. **Install Dependensi PHP & Node.js**
