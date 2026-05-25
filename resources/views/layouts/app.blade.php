@@ -88,13 +88,7 @@
                 <div class="flex-grow flex flex-col min-w-0 min-h-screen">
                     <!-- HEADER TOPBAR -->
                     <header class="bg-slate-50 h-24 flex items-center justify-end px-8 shrink-0">
-                        <div class="flex items-center gap-4">
-                            <!-- Notification Bell with red badge 3 -->
-                            <button class="relative p-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-full transition-colors focus:outline-none shadow-sm shrink-0">
-                                <i data-lucide="bell" class="w-4 h-4"></i>
-                                <span class="absolute -top-1 -right-1 w-4.5 h-4.5 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center border border-white">3</span>
-                            </button>
-                            
+                        <div class="flex items-center gap-4">                       
                             <!-- Date & Time Widget -->
                             <div class="bg-white border border-slate-200 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-sm text-xs text-slate-600 font-semibold h-11 shrink-0">
                                 <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i>

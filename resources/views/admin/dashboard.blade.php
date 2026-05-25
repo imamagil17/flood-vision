@@ -2,31 +2,31 @@
     <div class="py-8 relative min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-20">
   
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-stretch">
                 
-                <!-- KOLOM KIRI (1 Bagian) -->
-                <div class="xl:col-span-1 space-y-8">
+                <div class="xl:col-span-1 flex flex-col h-full space-y-8">
                     @include('admin.partials.camera-feed')
                     @include('admin.partials.recent-reports')
                 </div>
 
-                <!-- KOLOM KANAN (2 Bagian) -->
-                <div class="xl:col-span-2 space-y-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="xl:col-span-2 flex flex-col h-full space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 shrink-0">
                         @include('admin.partials.weather-card')
                         @include('admin.partials.ai-prediction-card')
                     </div>
-                    @include('admin.partials.water-chart')
+                    
+                    <div class="flex-grow flex flex-col h-0 w-full">
+                        @include('admin.partials.water-chart')
+                    </div>
                 </div>
             </div>
 
-            <!-- NEWS SECTION START -->
-            @include('admin.partials.news-slider')
-            <!-- NEWS SECTION END -->
-        </div>
+            <div class="mt-8">
+                @include('admin.partials.news-slider')
+            </div>
+            </div>
     </div>
 
-    <!-- MODAL & WIDGETS -->
     @include('admin.partials.news-modal')
     @include('admin.partials.chatbot-widget')
     @include('admin.partials.camera-modal')
