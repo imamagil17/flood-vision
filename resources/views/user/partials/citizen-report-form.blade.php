@@ -11,21 +11,35 @@
     
     <form id="citizenReportForm" class="space-y-4">
         <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Lokasi Detail</label>
-            <input type="text" id="reportLokasi" required placeholder="Cth: Jl. Bantaran Sungai, RT 02" class="w-full bg-white/60 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Lokasi Detail (Sungai)</label>
+            <select id="reportLokasi" name="nama_sungai" required class="w-full bg-white/60 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none">
+                <option value="" disabled selected>Pilih Aliran Sungai...</option>
+                <option value="Sungai Gumbasa">Wilayah Sekitar Aliran Sungai Gumbasa</option>
+                <option value="Sungai Lariang">Wilayah Sekitar Aliran Sungai Lariang</option>
+                <option value="Sungai Lindu">Wilayah Sekitar Aliran Sungai Lindu</option>
+                <option value="Sungai Samba">Wilayah Sekitar Aliran Sungai Samba</option>
+                <option value="Sungai Pakuli">Wilayah Sekitar Aliran Sungai Pakuli</option>
+                <option value="Sungai Marawola">Wilayah Sekitar Aliran Sungai Marawola</option>
+                <option value="Sungai Palolo">Wilayah Sekitar Aliran Sungai Palolo</option>
+                <option value="Sungai Kulawi">Wilayah Sekitar Aliran Sungai Kulawi</option>
+                <option value="Sungai Ngatabaru">Wilayah Sekitar Aliran Sungai Ngatabaru</option>
+                <option value="Sungai Wuno">Wilayah Sekitar Aliran Sungai Wuno</option>
+                <option value="Sungai Bangga">Wilayah Sekitar Aliran Sungai Bangga</option>
+            </select>
         </div>
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Tingkat Genangan</label>
             <select id="reportGenangan" required class="w-full bg-white/60 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none appearance-none">
-                <option value="" disabled selected>Pilih Tingkat...</option>
-                <option value="Rendah">Rendah (Semata Kaki)</option>
-                <option value="Sedang">Sedang (Selutut)</option>
-                <option value="Tinggi">Tinggi (Se-pinggang/Lebih)</option>
+                <option value="" disabled selected>Pilih Dampak Luapan...</option>
+                <option value="Aman">Aman / Normal (Belum Meluap / Genangan Hujan)</option>
+                <option value="Waspada">Waspada (Air Mulai Masuk Jalanan / Semata Kaki)</option>
+                <option value="Siaga">Siaga (Air Masuk ke Rumah Warga / Selutut)</option>
+                <option value="Bahaya">Bahaya (Banjir Bandang Kritis / Sepinggang atau Lebih)</option>
             </select>
         </div>
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Catatan Tambahan (Opsional)</label>
-            <textarea id="reportDeskripsi" rows="2" placeholder="Cth: Butuh bantuan evakuasi lansia..." class="w-full bg-white/60 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none resize-none"></textarea>
+            <textarea id="reportDeskripsi" rows="2" placeholder="Cth: Air sudah masuk ke pemukiman di Desa Oluboju, butuh bantuan evakuasi lansia..." class="w-full bg-white/60 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all outline-none resize-none"></textarea>
         </div>
         <button type="submit" id="btnSubmitReport" class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
             <i data-lucide="send" class="w-4 h-4"></i> Kirim Laporan Warga

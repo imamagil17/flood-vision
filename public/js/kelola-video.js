@@ -6,7 +6,6 @@
 // 1. Database Aturan Ambang Batas (Threshold) Centimeter (cm) per Sungai
 const RIVER_THRESHOLDS = {
     "Sungai Gumbasa": { waspada: 250, siaga: 350, bahaya: 450 },
-    "Sungai Palu":     { waspada: 150, siaga: 200, bahaya: 280 },
     "Sungai Lindu":    { waspada: 300, siaga: 390, bahaya: 500 },
     "Sungai Lariang":  { waspada: 400, siaga: 550, bahaya: 700 },
     "Sungai Pakuli":   { waspada: 200, siaga: 300, bahaya: 400 },

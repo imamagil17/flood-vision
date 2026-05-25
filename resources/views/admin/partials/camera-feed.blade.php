@@ -13,7 +13,6 @@
                             <div class="relative">
                                 <select id="camera_river_select" name="sungai" class="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all">
                                     <option value="Sungai Gumbasa" selected>Sungai Gumbasa</option>
-                                    <option value="Sungai Palu">Sungai Palu</option>
                                     <option value="Sungai Lariang">Sungai Lariang</option>
                                     <option value="Sungai Lindu">Sungai Lindu</option>
                                     <option value="Sungai Samba">Sungai Samba</option>

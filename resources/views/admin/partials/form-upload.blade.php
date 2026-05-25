@@ -30,7 +30,6 @@
                 <select id="nama_sungai" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all" required>
                     <option value="" disabled selected>Pilih Sungai</option>
                     <option value="Sungai Gumbasa">Sungai Gumbasa</option>
-                    <option value="Sungai Palu">Sungai Palu</option>
                     <option value="Sungai Lariang">Sungai Lariang</option>
                     <option value="Sungai Pakuli">Sungai Pakuli</option>
                     <option value="Sungai Marawola">Sungai Marawola</option>

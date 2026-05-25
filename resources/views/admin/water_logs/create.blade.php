@@ -19,7 +19,6 @@
                         <select name="nama_sungai" class="w-full rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm p-3 font-semibold text-slate-800" required>
                             <option value="" disabled selected>-- Pilih Sungai Pemantauan --</option>
                             <option value="Sungai Gumbasa" {{ old('nama_sungai') == 'Sungai Gumbasa' ? 'selected' : '' }}>Sungai Gumbasa</option>
-                            <option value="Sungai Palu" {{ old('nama_sungai') == 'Sungai Palu' ? 'selected' : '' }}>Sungai Palu</option>
                             <option value="Sungai Lariang" {{ old('nama_sungai') == 'Sungai Lariang' ? 'selected' : '' }}>Sungai Lariang</option>
                             <option value="Sungai Lindu" {{ old('nama_sungai') == 'Sungai Lindu' ? 'selected' : '' }}>Sungai Lindu</option>
                             <option value="Sungai Samba" {{ old('nama_sungai') == 'Sungai Samba' ? 'selected' : '' }}>Sungai Samba</option>

@@ -15,7 +15,6 @@
                                 <div class="relative w-full sm:w-48">
                                     <select onchange="updateChartByRiver(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all">
                                         <option value="Sungai Gumbasa" selected>Sungai Gumbasa</option>
-                                        <option value="Sungai Palu">Sungai Palu</option>
                                         <option value="Sungai Lariang">Sungai Lariang</option>
                                         <option value="Sungai Lindu">Sungai Lindu</option>
                                         <option value="Sungai Samba">Sungai Samba</option>

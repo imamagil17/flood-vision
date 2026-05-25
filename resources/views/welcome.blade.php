@@ -25,7 +25,6 @@
 
         <main class="w-full">
             @include('welcome.partials.hero-section')
-            @include('welcome.partials.live-demo')
             @include('welcome.partials.features-section')
             @include('welcome.partials.architecture-section')
             @include('welcome.partials.location-focus-section')

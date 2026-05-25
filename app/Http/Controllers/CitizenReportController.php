@@ -17,7 +17,7 @@ class CitizenReportController extends Controller
     {
         $request->validate([
             'lokasi' => 'required|string|max:255',
-            'tingkat_genangan' => 'required|in:Rendah,Sedang,Tinggi',
+            'tingkat_genangan' => 'required|in:Aman,Waspada,Siaga,Bahaya',
             'deskripsi' => 'nullable|string'
         ]);
 

@@ -43,11 +43,6 @@ class VideoUploadController extends Controller
                     elseif ($simulatedLevel >= 350) { $statusKondisi = 'Siaga'; }
                     elseif ($simulatedLevel >= 250) { $statusKondisi = 'Waspada'; }
                     else { $statusKondisi = 'Normal'; }
-                } elseif ($namaSungai === 'Sungai Palu') {
-                    if ($simulatedLevel >= 280) { $statusKondisi = 'Bahaya'; }
-                    elseif ($simulatedLevel >= 200) { $statusKondisi = 'Siaga'; }
-                    elseif ($simulatedLevel >= 150) { $statusKondisi = 'Waspada'; }
-                    else { $statusKondisi = 'Normal'; }
                 } elseif ($namaSungai === 'Sungai Lindu') {
                     if ($simulatedLevel >= 500) { $statusKondisi = 'Bahaya'; }
                     elseif ($simulatedLevel >= 390) { $statusKondisi = 'Siaga'; }

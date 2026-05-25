@@ -37,7 +37,6 @@ class LogController extends Controller
         // ── DATABASE ATURAN AMBANG BATAS DINAMIS PER SUNGAI ──
         $thresholds = [
             "Sungai Gumbasa" => [ 'waspada' => 250, 'siaga' => 350, 'bahaya' => 450, 'max' => 500 ],
-            "Sungai Palu"     => [ 'waspada' => 150, 'siaga' => 200, 'bahaya' => 280, 'max' => 320 ],
             "Sungai Lindu"    => [ 'waspada' => 300, 'siaga' => 390, 'bahaya' => 500, 'max' => 550 ],
             "Sungai Lariang"  => [ 'waspada' => 400, 'siaga' => 550, 'bahaya' => 700, 'max' => 800 ],
             "Sungai Pakuli"   => [ 'waspada' => 200, 'siaga' => 300, 'bahaya' => 400, 'max' => 450 ],

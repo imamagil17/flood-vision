@@ -7,7 +7,6 @@
                 <div class="xl:col-span-1 space-y-6 sticky top-6 self-start">
                     @include('user.partials.safety-guide')
                     @include('user.partials.telegram-alert')
-                    @include('user.partials.weather-forecast')
                 </div>
 
                 <!-- KOLOM KANAN (2 Bagian) -->

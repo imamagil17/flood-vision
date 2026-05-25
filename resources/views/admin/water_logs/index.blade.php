@@ -42,7 +42,7 @@
                             @forelse ($logs as $log)
                                 @php
                                     // Ambil data dengan fallback agar aman jika properti DB berbeda
-                                    $sungai = $log->nama_sungai ?? 'Sungai Palu';
+                                    $sungai = $log->nama_sungai ?? 'Sungai Gumbasa';
                                     
                                     $timeObj = null;
                                     if (isset($log->recorded_at)) {

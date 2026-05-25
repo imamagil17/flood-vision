@@ -28,7 +28,6 @@ function generateRiverData(riverName) {
     // Baseline awal per sungai untuk visualisasi dinamis yang bervariasi
     let base = 40;
     if (riverName === "Sungai Lariang") base = 75;
-    else if (riverName === "Sungai Palu") base = 35;
     else if (riverName === "Sungai Lindu") base = 55;
     else if (riverName === "Sungai Pakuli") base = 45;
     else if (riverName === "Sungai Marawola") base = 42;
@@ -245,7 +244,6 @@ function updateChartByRiver(riverName) {
 function updateAiPredictionCard(riverName) {
     const predictionData = {
         'Sungai Gumbasa':  { level: 62, status: 'NORMAL',  score: 12, from: 'emerald-500', to: 'teal-600' },
-        'Sungai Palu':      { level: 45, status: 'NORMAL',  score: 15, from: 'emerald-500', to: 'teal-600' },
         'Sungai Lariang':   { level: 91, status: 'BAHAYA',  score: 94, from: 'red-500',     to: 'rose-700' },
         'Sungai Lindu':     { level: 82, status: 'SIAGA',   score: 68, from: 'orange-500',  to: 'amber-600' },
         'Sungai Samba':     { level: 74, status: 'SIAGA',   score: 55, from: 'orange-500',  to: 'amber-600' },

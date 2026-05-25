@@ -16,7 +16,6 @@
                             <select name="sungai" id="river_select" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all" required>
                                 <option value="" disabled selected>Pilih Sungai</option>
                                 <option value="Sungai Gumbasa">Sungai Gumbasa</option>
-                                <option value="Sungai Palu">Sungai Palu</option>
                                 <option value="Sungai Lariang">Sungai Lariang</option>
                                 <option value="Sungai Lindu">Sungai Lindu</option>
                                 <option value="Sungai Samba">Sungai Samba</option>
@@ -78,7 +77,6 @@
                         <select onchange="window.location.href = this.value ? '?sungai=' + encodeURIComponent(this.value) : '?'" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-xs font-semibold text-slate-700 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer appearance-none transition-all">
                             <option value="">Semua Sungai</option>
                             <option value="Sungai Gumbasa" {{ request('sungai') == 'Sungai Gumbasa' ? 'selected' : '' }}>Sungai Gumbasa</option>
-                            <option value="Sungai Palu" {{ request('sungai') == 'Sungai Palu' ? 'selected' : '' }}>Sungai Palu</option>
                             <option value="Sungai Lariang" {{ request('sungai') == 'Sungai Lariang' ? 'selected' : '' }}>Sungai Lariang</option>
                             <option value="Sungai Lindu" {{ request('sungai') == 'Sungai Lindu' ? 'selected' : '' }}>Sungai Lindu</option>
                             <option value="Sungai Samba" {{ request('sungai') == 'Sungai Samba' ? 'selected' : '' }}>Sungai Samba</option>
