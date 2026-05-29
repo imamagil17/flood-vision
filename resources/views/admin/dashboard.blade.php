@@ -24,7 +24,6 @@
             <div class="mt-8">
                 @include('admin.partials.news-slider')
             </div>
-            </div>
     </div>
 
     @include('admin.partials.news-modal')

@@ -1,53 +1,62 @@
 <x-app-layout>
     <div class="py-8 relative min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-20">
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-stretch mb-8">
                 
-                <!-- KOLOM KIRI (1 Bagian) -->
-                <div class="xl:col-span-1 space-y-6 sticky top-6 self-start">
+                <div class="xl:col-span-1 flex flex-col h-full space-y-8">
                     @include('user.partials.safety-guide')
                     @include('user.partials.telegram-alert')
                 </div>
 
-                <!-- KOLOM KANAN (2 Bagian) -->
-                <div class="xl:col-span-2 space-y-8">
-                    
-                    <!-- Cuaca & AI Prediction -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="xl:col-span-2 flex flex-col justify-between h-full space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 shrink-0">
                         @include('user.partials.weather-card')
                         @include('user.partials.ai-prediction-card')
                     </div>
 
-                    <!-- Grafik Tren Ketinggian Air -->
-                    @include('user.partials.water-chart')
-
-                    <!-- Riwayat Peringatan -->
-                    @include('user.partials.notification-history')
-
-                    <!-- Form Laporan Warga & Checklist -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                        @include('user.partials.checklist')
-                        @include('user.partials.citizen-report-form')
+                    <div class="w-full flex-grow flex flex-col h-0 min-h-[400px]">
+                        @include('user.partials.water-chart')
                     </div>
-
                 </div>
             </div>
 
-            <!-- NEWS SECTION -->
-            @include('user.partials.news-slider')
+            <div class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    @include('user.partials.citizen-report-form')
+                    @include('user.partials.checklist')
+                </div>
+                
+                @include('user.partials.notification-history')
+                
+                <div class="w-full mt-8">
+                    @include('user.partials.news-slider')
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- MODAL & WIDGETS -->
     @include('user.partials.news-modal')
     @include('user.partials.chatbot-widget')
     @include('user.partials.map-modal')
 
     <style>
         .hide-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Animasi Lambaian Tangan pada Banner */
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60%, 100% { transform: rotate(0deg); }
+        }
+        .animate-wave { animation: wave 2.5s infinite; }
     </style>
     
-    <!-- EXTERNAL DEPENDENCIES -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1/dist/chartjs-plugin-annotation.min.js"></script>
@@ -61,7 +70,6 @@
     <script src="{{ asset('js/camera.js') }}"></script>
     <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady();"></script>
 
-    <!-- MODULAR JAVASCRIPT SYSTEM (Separation of Concerns) -->
     <script src="{{ asset('js/dashboard-api.js') }}"></script>
     <script src="{{ asset('js/water-chart.js') }}"></script>
     <script src="{{ asset('js/chatbot.js') }}"></script>

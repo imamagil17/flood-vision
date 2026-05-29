@@ -31,28 +31,35 @@
         </script>
         <style>
             /* Instantly apply collapsed style if class is set in html root */
-            html.sidebar-is-collapsed #sidebarAdmin {
+            html.sidebar-is-collapsed #sidebarAdmin,
+            html.sidebar-is-collapsed #sidebarUser {
                 width: 5rem !important; /* w-20 */
             }
             html.sidebar-is-collapsed #sidebarAdmin .sidebar-hide,
-            html.sidebar-is-collapsed #sidebarAdmin .menu-label {
+            html.sidebar-is-collapsed #sidebarAdmin .menu-label,
+            html.sidebar-is-collapsed #sidebarUser .sidebar-hide,
+            html.sidebar-is-collapsed #sidebarUser .menu-label {
                 display: none !important;
             }
-            html.sidebar-is-collapsed #sidebarAdmin .flex-grow a {
+            html.sidebar-is-collapsed #sidebarAdmin .flex-grow a,
+            html.sidebar-is-collapsed #sidebarUser .flex-grow a {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
                 justify-content: center !important;
             }
-            html.sidebar-is-collapsed #btnToggleSidebar {
+            html.sidebar-is-collapsed #btnToggleSidebar,
+            html.sidebar-is-collapsed #btnToggleSidebarUser {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
                 justify-content: center !important;
             }
-            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 {
+            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0,
+            html.sidebar-is-collapsed #sidebarUser .p-4.pt-0 {
                 padding-left: 0.5rem !important;
                 padding-right: 0.5rem !important;
             }
-            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative > button {
+            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative > button,
+            html.sidebar-is-collapsed #sidebarUser .p-4.pt-0 .relative > button {
                 width: 2.75rem !important;
                 height: 2.75rem !important;
                 padding: 0 !important;
@@ -61,11 +68,13 @@
                 margin-right: auto !important;
                 border-radius: 0.75rem !important;
             }
-            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative > button .w-9 {
+            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative > button .w-9,
+            html.sidebar-is-collapsed #sidebarUser .p-4.pt-0 .relative > button .w-9 {
                 margin-left: 0 !important;
                 margin-right: 0 !important;
             }
-            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative .absolute.bottom-full {
+            html.sidebar-is-collapsed #sidebarAdmin .p-4.pt-0 .relative .absolute.bottom-full,
+            html.sidebar-is-collapsed #sidebarUser .p-4.pt-0 .relative .absolute.bottom-full {
                 bottom: 0 !important;
                 left: 100% !important;
                 right: auto !important;
@@ -121,28 +130,45 @@
                 </div>
             </div>
         @else
-            <!-- REGULAR USER LAYOUT (TOPBAR STACKED) -->
-            <div class="min-h-screen bg-slate-50 flex flex-col">
+            <!-- REGULAR USER LAYOUT (SIDE-BY-SIDE SIDEBAR) -->
+            <div class="min-h-screen bg-slate-50 flex overflow-x-hidden">
                 @include('layouts.navigation')
 
-                <!-- Page Heading -->
-                @if (isset($header))
-                    <header class="bg-white shadow">
-                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                            {{ $header }}
+                <!-- RIGHT CONTENT AREA -->
+                <div class="flex-grow flex flex-col min-w-0 min-h-screen">
+                    <!-- HEADER TOPBAR -->
+                    <header class="bg-slate-50 h-24 flex items-center justify-end px-8 shrink-0">
+                        <div class="flex items-center gap-4">                       
+                            <!-- Date & Time Widget -->
+                            <div class="bg-white border border-slate-200 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-sm text-xs text-slate-600 font-semibold h-11 shrink-0">
+                                <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i>
+                                <div class="leading-tight">
+                                    <p class="font-bold text-slate-800" id="topbarDate"></p>
+                                    <p class="text-[10px] text-slate-400 font-medium" id="topbarTime"></p>
+                                </div>
+                            </div>
                         </div>
                     </header>
-                @endif
 
-                <!-- Page Content -->
-                <main class="flex-grow pb-12">
-                    {{ $slot }}
-                </main>
+                    <!-- Page Heading (Optional, e.g. for breadcrumbs) -->
+                    @if (isset($header))
+                        <div class="bg-white border-b border-slate-100 py-6">
+                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </div>
+                    @endif
 
-                <!-- Global Footer -->
-                <footer class="relative z-10 border-t border-slate-200/60 bg-white/40 backdrop-blur-md py-8 text-center mt-auto">
-                    <p class="text-slate-500 text-sm font-medium">&copy; 2026 Flood-Vision System &mdash; Sistem Mitigasi Banjir Cerdas.</p>
-                </footer>
+                    <!-- Page Content -->
+                    <main class="flex-grow pb-12">
+                        {{ $slot }}
+                    </main>
+
+                    <!-- Global Footer -->
+                    <footer class="border-t border-slate-200/60 bg-white/40 backdrop-blur-md py-6 text-center mt-auto shrink-0">
+                        <p class="text-slate-500 text-xs font-semibold">&copy; 2026 Flood-Vision System &mdash; Sistem Mitigasi Banjir Cerdas.</p>
+                    </footer>
+                </div>
             </div>
         @endif
 

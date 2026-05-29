@@ -1,4 +1,4 @@
-<div class="bg-white/70 backdrop-blur-md rounded-3xl p-4 md:p-6 shadow-sm border border-slate-200/60 mt-8">
+<div class="bg-white/70 backdrop-blur-lg border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl p-4 md:p-6 relative overflow-hidden">
     <div class="flex items-center gap-3 mb-5">
         <div class="p-2 bg-rose-100 text-rose-600 rounded-xl">
             <i data-lucide="bell-ring" class="w-5 h-5"></i>
