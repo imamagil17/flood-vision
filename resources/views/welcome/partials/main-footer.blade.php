@@ -52,7 +52,7 @@
         </div>
 
         <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-400">
-            <p>&copy; 2026 Flood-Vision System. Dikembangkan oleh Imam Agil Aiman.</p>
+            <p>&copy; 2026 Flood-Vision System. Dikembangkan oleh Kelompok 12</p>
             <div class="flex gap-6">
                 <a href="#" class="hover:text-blue-600 transition-colors hover:underline">Kebijakan Privasi</a>
                 <a href="#" class="hover:text-blue-600 transition-colors hover:underline">Syarat & Ketentuan</a>
