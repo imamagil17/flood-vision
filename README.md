@@ -1,8 +1,4 @@
-# 🌊 Flood-Vision (Sistem Mitigasi Banjir Cerdas)
-
-<p align="center">
-  <img src="https://images.unsplash.com/photo-1596422846543-74c6e6129ed8?auto=format&fit=crop&q=80&w=1200&h=400" alt="Flood-Vision Banner" style="border-radius: 12px; border: 1px solid rgba(226, 232, 240, 0.8); box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);" />
-</p>
+# Flood-Vision (Sistem Mitigasi Banjir Cerdas)
 
 <p align="center">
   <a href="https://laravel.com"><img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel" /></a>
@@ -28,7 +24,7 @@ Jantung kecerdasan buatan dari Flood-Vision bertumpu pada arsitektur jaringan sa
 
 ---
 
-## 🎛️ 2. System Features Ecosystem
+## 2. System Features Ecosystem
 
 Flood-Vision menyajikan tiga gerbang antarmuka interaktif yang dibalut dengan desain **Premium SaaS Light Mode** super modern yang menampilkan tata letak *Bento Box Grid*, komponen *glassmorphism* (`backdrop-blur-md`), gradien halus (`bg-slate-50`), serta responsivitas penuh di berbagai ukuran layar.
 
@@ -58,7 +54,7 @@ graph TD
     end
 ```
 
-### 📱 A. Citizen Portal (User Dashboard)
+### A. Citizen Portal (User Dashboard)
 Gerbang interaksi bagi masyarakat sipil di kawasan rawan bencana untuk memantau keselamatan lingkungan mereka secara mandiri:
 *   **Real-time Flood Tier Indicators:** Representasi visual tingkat kerawanan air secara instan berdasarkan klasifikasi terstandarisasi BPBD: **Aman** (Hijau), **Waspada** (Kuning), **Siaga** (Oranye), dan **Bahaya** (Merah).
 *   **Automated Chart.js Historical Charts:** Visualisasi grafik garis interaktif yang memetakan histori fluktuasi level air secara langsung dari basis data dengan kemampuan pembaruan berkala.
@@ -66,14 +62,14 @@ Gerbang interaksi bagi masyarakat sipil di kawasan rawan bencana untuk memantau 
 *   **Integrated NLP AI Chatbot Assistant:** Asisten percakapan cerdas bertenaga LLM yang terintegrasi secara asinkron untuk memberikan panduan mitigasi darurat secara interaktif kapan saja.
 *   **Evacuation Guide Modal:** Modal informasi berbasis *glassmorphism* yang menyediakan rute evakuasi terdekat dan daftar perlengkapan tas siaga bencana.
 
-### 🛡️ B. Command Center (Admin Dashboard)
+### B. Command Center (Admin Dashboard)
 Pusat kendali operasional bagi administrator kebencanaan untuk mengambil keputusan taktis secara instan:
 *   **YOLOv26 Video Processing Queue Manager:** Panel visual untuk melacak antrean aliran video CCTV sungai aktif yang diproses oleh AI backend secara berurutan.
 *   **WITA Timezone-Synchronized Telegram Simulator:** Simulasi peluncuran pesan peringatan dini manual ke publik yang disinkronkan presisi dengan Waktu Indonesia Tengah (**Asia/Makassar**), menampilkan pratinjau isi pesan sebelum disebarkan.
 *   **Secure Citizen Report Verification Center:** Sistem pemrosesan laporan warga dengan *background virtual form generation* yang aman untuk mencegah injeksi data saat admin melakukan validasi status laporan dari pending menjadi terverifikasi.
 *   **News & Announcement CRUD Panels:** Manajemen konten berita dan pengumuman kebencanaan terpusat untuk disebarkan secara dinamis ke halaman depan publik maupun portal warga.
 
-### 🌐 C. Public Welcome Page
+### C. Public Welcome Page
 Halaman pendarat (*landing page*) publik bernuansa premium bergaya Bento Box Layout yang menampilkan:
 *   **Real-time Status Feed:** Ringkasan tingkat air sungai terkini beserta cuaca lokal.
 *   **Core Intelligence Deep Dive Section:** Pembongkaran ilmiah mengenai cara kerja **YOLOv26 Nano** dalam mengekstrak fitur spasial air sungai (*Feature Extraction*) hingga mencapai kecepatan kalkulasi milidetik (*Ultra-Fast Inference*).
@@ -81,7 +77,7 @@ Halaman pendarat (*landing page*) publik bernuansa premium bergaya Bento Box Lay
 
 ---
 
-## 🛠️ 3. Step-by-Step Installation & Deployment Guide
+## 3. Step-by-Step Installation & Deployment Guide
 
 Ikuti instruksi teknis di bawah ini untuk memasang dan menjalankan ekosistem Flood-Vision secara lokal di mesin pengembangan Anda:
 
@@ -164,11 +160,11 @@ Aplikasi web Flood-Vision kini aktif dan siap diakses melalui tautan peramban An
 
 ---
 
-## 🏃 4. Application Operational Walkthrough
+## 4. Application Operational Walkthrough
 
 Berikut adalah skenario alur kerja operasional penggunaan sistem Flood-Vision dari sisi Warga hingga Administrator:
 
-### 👤 Skenario A: Warga (Citizen User Flow)
+### Skenario A: Warga (Citizen User Flow)
 1. **Autentikasi Akun:** Warga membuka situs web utama, masuk ke halaman pendaftaran/login, dan memasukkan kredensial akun warga mereka.
 2. **Akses Dashboard:** Setelah masuk, warga diarahkan ke *Citizen Portal* yang menampilkan status tingkat bahaya terkini (misal: **Waspada**), lengkap dengan grafik dinamis Chart.js yang terus diperbarui.
 3. **Mengajukan Laporan Kebencanaan:**
@@ -176,7 +172,7 @@ Berikut adalah skenario alur kerja operasional penggunaan sistem Flood-Vision da
     *   Warga mengisi detail lokasi (contoh: *Sekitar Jembatan Sungai Gumbasa*), memilih klasifikasi genangan dari opsi *dropdown* (`Tinggi` / `Sedang` / `Rendah`), memasukkan deskripsi kondisi visual, lalu menekan tombol **Kirim Laporan**.
     *   Sistem memvalidasi token CSRF secara otomatis di latar belakang, memverifikasi kecocokan tipe data ENUM database, dan menyimpan data laporan dengan status default `'Pending'`.
 
-### 🛡️ Skenario B: Administrator (Command Center Flow)
+### Skenario B: Administrator (Command Center Flow)
 1. **Pemantauan Real-time & Deteksi AI:** Admin memantau live feeds dari kamera pemantau sungai di *Command Center*. Model **YOLOv26 Nano** di backend FastAPI secara konstan memproses bingkai video, melacak tinggi batas air sungai, dan memetakan data numerik kembali ke server Laravel.
 2. **Verifikasi Laporan Masuk:**
     *   Admin melihat daftar laporan warga di panel **"Verifikasi Laporan Darurat"**. Laporan yang baru dikirim oleh warga akan berstatus berwarna kuning (`Pending`).
@@ -190,11 +186,11 @@ Berikut adalah skenario alur kerja operasional penggunaan sistem Flood-Vision da
 
 ---
 
-## 🎓 5. Official Credits & Dedication
+## 5. Official Credits & Dedication
 
 Aplikasi **Flood-Vision (Sistem Mitigasi Banjir Cerdas)** didekasikan sebagai bagian dari luaran proyek riset terapan inovasi teknologi mitigasi bencana alam.
 
-*   **Pengembang Utama:** Imam Agil Aiman (NIM: **F55123066**)
-*   **Institusi:** Program Studi Teknik Informatika, Jurusan Teknologi Informasi, Fakultas Teknik, **Universitas Tadulako**, Palu, Sulawesi Tengah.
+*   **Pengembang Utama:** Kelompok 12
+*   **Institusi:** Program Studi Teknik Informatika & Sistem Informasi, Jurusan Teknologi Informasi, Fakultas Teknik, **Universitas Tadulako**, Palu, Sulawesi Tengah.
 
 *Dipersembahkan untuk keselamatan masyarakat dan pengelolaan risiko bencana lingkungan yang lebih cerdas, responsif, dan berbasis data di Indonesia.*
