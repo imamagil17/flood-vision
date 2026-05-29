@@ -100,67 +100,6 @@
                 <input type="text" id="searchVideo" class="bg-transparent outline-none border-none text-xs text-slate-700 placeholder-slate-400 w-full" placeholder="Cari video...">
             </div>
         </div>
-
-        <div class="flex-1 space-y-4 overflow-y-auto max-h-[280px] pr-1" id="videoListContainer">
-            
-            <!-- Dummy Video 1: Sungai Samba -->
-            <div class="flex items-center justify-between p-4 bg-white border border-slate-200/60 rounded-2xl shadow-sm video-card-item" data-name="kondisi_sungaisamba_240526.mp4 sungai samba" data-river="Sungai Samba" data-cm="410">
-                <div class="flex items-center gap-4 min-w-0">
-                    <div class="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-slate-400 shrink-0 shadow-sm">
-                        <i data-lucide="video" class="w-5 h-5"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h4 class="font-bold text-sm text-slate-800 truncate">Kondisi_SungaiSamba_240526.mp4</h4>
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-slate-500">
-                            <span class="font-bold text-slate-700">Sungai Samba</span>
-                            <span>•</span>
-                            <span>24 Mei 2026</span>
-                            <span>•</span>
-                            <span>45 MB</span>
-                            <span>•</span>
-                            <span class="font-bold text-blue-600">YOLO: <span class="cm-display">410</span> cm</span>
-                        </div>
-                        <div class="mt-2 status-badge-target">
-                            <!-- badge status rendered dynamically by JS -->
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 pl-4 shrink-0">
-                    <button class="p-2 hover:bg-slate-50 text-blue-600 rounded-xl"><i data-lucide="play" class="w-4 h-4 fill-blue-600/10"></i></button>
-                    <button class="p-2 hover:bg-slate-50 text-slate-600 rounded-xl"><i data-lucide="download" class="w-4 h-4"></i></button>
-                </div>
-            </div>
-
-            <!-- Dummy Video 2: Sungai Lindu -->
-            <div class="flex items-center justify-between p-4 bg-white border border-slate-200/60 rounded-2xl shadow-sm video-card-item" data-name="pemantauan_lindu_pagi.mp4 sungai lindu" data-river="Sungai Lindu" data-cm="350">
-                <div class="flex items-center gap-4 min-w-0">
-                    <div class="w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-slate-400 shrink-0 shadow-sm">
-                        <i data-lucide="video" class="w-5 h-5"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h4 class="font-bold text-sm text-slate-800 truncate">Pemantauan_Lindu_Pagi.mp4</h4>
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-slate-500">
-                            <span class="font-bold text-slate-700">Sungai Lindu</span>
-                            <span>•</span>
-                            <span>23 Mei 2026</span>
-                            <span>•</span>
-                            <span>78 MB</span>
-                            <span>•</span>
-                            <span class="font-bold text-blue-600">YOLO: <span class="cm-display">350</span> cm</span>
-                        </div>
-                        <div class="mt-2 status-badge-target">
-                            <!-- badge status rendered dynamically by JS -->
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 pl-4 shrink-0">
-                    <button class="p-2 hover:bg-slate-50 text-blue-600 rounded-xl"><i data-lucide="play" class="w-4 h-4 fill-blue-600/10"></i></button>
-                    <button class="p-2 hover:bg-slate-50 text-slate-600 rounded-xl"><i data-lucide="download" class="w-4 h-4"></i></button>
-                </div>
-            </div>
-
-        </div>
-
         <button class="mt-4 w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 border border-slate-200 rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-2">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Muat lebih banyak
         </button>
